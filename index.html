@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090d">
+  <title>¡Feliz cumpleaños, amor!</title>
+  <style>
+    :root { color-scheme: dark; --pink:#f06f98; --cream:#fff1d8; --choco:#754455; }
+    * { box-sizing:border-box }
+    body {
+      margin:0; min-height:100vh; display:grid; place-items:center; overflow:hidden;
+      font-family: "Trebuchet MS", system-ui, sans-serif; color:#fff3f6;
+      background:#08090d;
+    }
+    .scene { z-index:2; width:min(100%, 720px); padding:30px 18px 42px; text-align:center; position:relative; }
+    h1 { margin:0 0 8px; color:#ffd76a; -webkit-text-stroke:2.2px #fff; paint-order:stroke fill;
+      text-shadow:0 0 4px #fff,0 0 16px #fff7cf,0 0 30px #ffd76a88,2px 3px 0 #17110a;
+      font-family:Georgia,serif; font-size:clamp(3rem,10vw,5.4rem); line-height:1; white-space:nowrap; }
+    .subtitle { margin:0 0 4px; font-size:1.05rem; color:#f4d996; -webkit-text-stroke:.75px #fff; paint-order:stroke fill;
+      text-shadow:0 0 3px #fff,0 0 10px #fff9df,1px 2px 0 #120d07; }
+    .cake-wrap { width:min(94vw, 520px); margin:0 auto; }
+    .cake-wrap svg { filter:drop-shadow(0 18px 28px #0009); }
+    svg { display:block; width:100%; overflow:visible; }
+    .slice { transform-box:fill-box; transform-origin:center; transition:transform .9s cubic-bezier(.2,.8,.25,1); }
+    .cake-wrap.open .slice { transform:translate(112px,-45px) rotate(12deg); }
+    .flame { transform-origin:50% 100%; animation:flicker .65s ease-in-out infinite alternate; }
+    .flame { transition:opacity .35s ease, transform .5s ease; }
+    .cake-wrap.wished .flame { animation:none; opacity:0; transform:translateY(-9px) scale(.08); }
+    .smoke { opacity:0; transition:opacity .3s .2s; }
+    .cake-wrap.wished .smoke { opacity:.7; }
+    @keyframes flicker { to { transform:scale(.82,1.12) rotate(4deg); opacity:.75 } }
+    .btn {
+      border:0; border-radius:999px; padding:14px 24px; color:white; background:#e75f8b;
+      font:700 1rem inherit; font-weight:700; font-size:1rem; letter-spacing:.02em;
+      box-shadow:0 7px 0 #c74873, 0 12px 22px #d8668a38; cursor:pointer;
+      transition:transform .15s, box-shadow .15s;
+    }
+    .btn:hover { transform:translateY(-2px); box-shadow:0 9px 0 #c74873, 0 14px 22px #d8668a38; }
+    .btn:active { transform:translateY(4px); box-shadow:0 3px 0 #c74873; }
+    .btn:focus-visible { outline:3px solid #754455; outline-offset:5px; }
+    .btn:disabled { cursor:pointer; }
+    .message { min-height:1.6em; margin:22px 0 0; font:italic 1.4rem Georgia,serif; color:#ffd76a; -webkit-text-stroke:.85px #fff; paint-order:stroke fill;
+      text-shadow:0 0 4px #fff,0 0 14px #fff8d8,0 0 18px #f4c44968,1px 2px 0 #100b05; }
+    .sparkle { position:absolute; z-index:3; color:#ffe19a; text-shadow:0 0 12px #ffc757; animation:twinkle 1.8s ease-in-out infinite alternate; }
+    .s1 { top:34%; left:13%; font-size:25px } .s2 { top:47%; right:11%; font-size:32px; animation-delay:.7s }
+    .s3 { top:22%; right:18%; font-size:19px; animation-delay:1.1s }
+    @keyframes twinkle { to { transform:scale(.65) rotate(25deg); opacity:.45 } }
+    .night-sky { position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:0;
+      background:linear-gradient(180deg,#05070b55 0%,#090a10a8 70%,#05060aa8 100%),url("autos/fondo-pista.jpg") center/cover no-repeat; }
+    .burst { position:absolute; width:9px; aspect-ratio:1; border-radius:50%; opacity:.8;
+      background:radial-gradient(circle, #fff 0 2px, transparent 3px);
+      box-shadow:0 -65px #ffcf70, 0 65px #ffcf70, 65px 0 #ffcf70, -65px 0 #ffcf70,
+        46px 46px #ff8cae, -46px 46px #ff8cae, 46px -46px #ff8cae, -46px -46px #ff8cae,
+        0 -95px #fff0c0, 0 95px #fff0c0, 95px 0 #fff0c0, -95px 0 #fff0c0,
+        67px 67px #8ee9ff, -67px 67px #8ee9ff, 67px -67px #8ee9ff, -67px -67px #8ee9ff;
+      animation:firework 3.8s ease-out infinite; }
+    .b1 { top:15%; left:16%; color:#ffcb72; }
+    .b2 { top:19%; right:17%; animation-delay:1s; }
+    .b3 { top:43%; right:8%; animation-delay:2s; }
+    .b4 { top:39%; left:8%; animation-delay:1.7s; }
+    .b5 { top:10%; left:52%; animation-delay:2.6s; }
+    @keyframes firework { 0%,100% { opacity:0; scale:.25 } 20% { opacity:.95; scale:.7 } 56% { opacity:.6; scale:1.3 } 78% { opacity:.2; scale:1.55 } }
+    .side-garage { position:fixed; z-index:1; top:11%; width:clamp(130px,18vw,245px); display:flex; flex-direction:column; align-items:center; gap:clamp(12px,3vh,30px); }
+    .side-left { left:0; }
+    .side-right { right:0; }
+    .car-side { display:block; width:100%; max-height:19vh; height:auto; object-fit:contain;
+      opacity:.98; filter:drop-shadow(0 9px 12px #000c) drop-shadow(0 0 14px #e9c77d35); animation:carGlide 4s ease-in-out infinite; }
+    .side-left .car-side { transform:scaleX(-1); }
+    .side-left .car-side:nth-child(2), .side-right .car-side:nth-child(2) { animation-delay:-1.3s; }
+    .side-left .car-side:nth-child(3), .side-right .car-side:nth-child(3) { animation-delay:-2.6s; }
+    @keyframes carGlide { 0%,100% { translate:0 0 } 50% { translate:0 -7px } }
+    .flag-banner { width:min(38vw,235px); height:91px; margin:0 auto -5px; position:relative; z-index:2; }
+    .flag-banner img { display:block; width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 5px 12px #000a); }
+    .chocolate-hole { opacity:0; transition:opacity .35s .2s; }
+    .cake-wrap.open .chocolate-hole { opacity:1; }
+    @media (max-width:900px) { .side-garage { width:clamp(86px,13vw,115px); top:13%; gap:4vh; } .car-side { max-height:16vh; opacity:.88; } .flag-banner { width:180px; height:70px; } }
+    @media (max-width:560px) { .side-garage { width:58px; top:17%; gap:4vh; } .car-side { max-height:13vh; } .scene { padding-left:10px; padding-right:10px; } .flag-banner { width:145px; height:58px; } }
+    @media (max-height:700px) { .scene { padding-top:12px; padding-bottom:18px; } .cake-wrap { width:min(82vw,450px); } .message { margin-top:12px; } .flag-banner { height:64px; } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; animation-iteration-count:1!important; scroll-behavior:auto!important; transition-duration:.01ms!important } }
+  </style>
+</head>
+<body>
+  <div class="night-sky" aria-hidden="true">
+    <i class="burst b1"></i><i class="burst b2"></i><i class="burst b3"></i><i class="burst b4"></i><i class="burst b5"></i>
+    <div class="side-garage side-left" aria-hidden="true">
+      <img class="car-side" src="autos/negro-lateral.png" alt="">
+      <img class="car-side" src="autos/rojo-gt.png" alt="">
+      <img class="car-side" src="autos/porsche-plata.png" alt="">
+    </div>
+    <div class="side-garage side-right" aria-hidden="true">
+      <img class="car-side" src="autos/negro-gt.png" alt="">
+      <img class="car-side" src="autos/negro-frontal.png" alt="">
+      <img class="car-side" src="autos/porsche-gt3.png" alt="">
+    </div>
+  </div>
+  <main class="scene">
+    <span class="sparkle s1" aria-hidden="true">✦</span><span class="sparkle s2" aria-hidden="true">✧</span><span class="sparkle s3" aria-hidden="true">✦</span>
+    <h1>¡MI AMOR!</h1>
+    <p class="subtitle">Hoy celebramos a la persona más especial 💕</p>
+    <div class="flag-banner"><img src="autos/banderas-meta.png" alt="Banderas de cuadros de carrera" /></div>
+    <div class="cake-wrap" id="cake">
+      <svg viewBox="0 0 520 350" role="img" aria-labelledby="cakeTitle cakeDesc">
+        <title id="cakeTitle">Torta de cumpleaños</title><desc id="cakeDesc">Una torta rosada con velitas y una porción que se separa al tocar el botón.</desc>
+        <ellipse cx="255" cy="305" rx="190" ry="22" fill="#e9b5c3" opacity=".35"/>
+        <!-- Plato -->
+        <ellipse cx="255" cy="283" rx="180" ry="32" fill="#fff" stroke="#edc5d0" stroke-width="5"/>
+        <ellipse cx="255" cy="278" rx="143" ry="23" fill="#fff8f6"/>
+        <!-- Torta base -->
+        <path d="M110 164h290v92c0 18-65 32-145 32s-145-14-145-32z" fill="#f5a9bd" stroke="#d76d8c" stroke-width="3"/>
+        <ellipse cx="255" cy="164" rx="145" ry="39" fill="#ffe7cf" stroke="#d76d8c" stroke-width="3"/>
+        <!-- Glaseado y gotitas -->
+        <path d="M112 165c15 17 28 2 42 11 15 10 28-1 42 6 16 9 29-3 44 4 16 8 30-4 45 3 16 8 30-5 45 2 16 7 30-3 43-10v17c-14 11-29 2-43 9-16 8-29-2-45 5-15 7-29-3-45 4-15 7-29-3-44 4-15 7-30-4-44 4-16 8-29-1-41-7z" fill="#fff7eb"/>
+        <g fill="#fff6ef"><circle cx="151" cy="217" r="5"/><circle cx="211" cy="239" r="5"/><circle cx="283" cy="216" r="5"/><circle cx="346" cy="238" r="5"/></g>
+        <!-- Interior de chocolate que aparece al apartar el pedazo -->
+        <g class="chocolate-hole">
+          <path d="M255 164L400 164 327 204z" fill="#43202a" stroke="#7a3e4c" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M327 204L400 164v78c-20 12-46 19-73 23z" fill="#542731" stroke="#7a3e4c" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M264 168l112 1-49 27z" fill="#69303a" opacity=".72"/>
+          <path d="M336 212l52-29v49l-52 22z" fill="#6e303b" opacity=".7"/>
+        </g>
+        <!-- Velitas -->
+        <g stroke="#fff" stroke-width="2"><path d="M202 128v-34" stroke="#f06f98" stroke-width="12"/><path d="M255 119V79" stroke="#8ac7b5" stroke-width="12"/><path d="M308 128v-34" stroke="#f5b84b" stroke-width="12"/></g>
+        <g fill="#ffbd4a"><path class="flame" d="M202 89c-18-18 4-29 5-39 14 15 18 26 5 39z"/><path class="flame" d="M255 74c-18-18 4-29 5-39 14 15 18 26 5 39z"/><path class="flame" d="M308 89c-18-18 4-29 5-39 14 15 18 26 5 39z"/></g>
+        <g class="smoke" fill="none" stroke="#fff1df" stroke-width="3" stroke-linecap="round"><path d="M206 45c-7-8 7-9 1-17"/><path d="M259 30c-7-8 7-9 1-17"/><path d="M312 45c-7-8 7-9 1-17"/></g>
+        <!-- Pedazo triangular animado: cara superior, lateral y base -->
+        <g class="slice">
+          <path d="M255 164L400 164 327 204z" fill="#fff0d8" stroke="#d76d8c" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M327 204L400 164v78c0 7-30 17-73 22z" fill="#ee91aa" stroke="#d76d8c" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M327 204c25-13 49-25 73-40v15c-23 16-49 29-73 42z" fill="#fff7eb"/>
+          <circle cx="344" cy="218" r="4" fill="#fff6ef"/><circle cx="379" cy="195" r="4" fill="#fff6ef"/>
+          <path d="M255 164c24-20 50-29 77-29s52 9 68 29c-20 7-47 16-73 40-20-18-43-31-72-40z" fill="#f5abc0" stroke="#d76d8c" stroke-width="3" stroke-linejoin="round" opacity=".98"/>
+          <g fill="#fff4e4"><circle cx="297" cy="154" r="5"/><circle cx="337" cy="148" r="5"/><circle cx="370" cy="157" r="5"/></g>
+        </g>
+      </svg>
+    </div>
+    <button class="btn" id="wishButton" type="button" aria-expanded="false">Presiona y pide un deseo ✨</button>
+    <p class="message" id="message" aria-live="polite"></p>
+  </main>
+  <script>
+    const cake = document.querySelector('#cake');
+    const button = document.querySelector('#wishButton');
+    const message = document.querySelector('#message');
+    let wished = false;
+    button.addEventListener('click', () => {
+      wished = !wished;
+      cake.classList.toggle('open', wished);
+      cake.classList.toggle('wished', wished);
+      button.setAttribute('aria-expanded', String(wished));
+      button.textContent = wished ? '¡Deseo pedido! Volver a empezar ↻' : 'Presiona y pide un deseo ✨';
+      message.textContent = wished ? '¡Que todos tus deseos se cumplan! 💖' : '';
+    });
+  </script>
+</body>
+</html>
